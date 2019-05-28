@@ -27,16 +27,21 @@ housing_db = pd.read_csv("../datasets/housing/housing.csv", thousands=',')
 X = np.c_[housing_db["median_income"]]
 y = np.c_[housing_db["median_house_value"]]
 
-# Visualize the data
-housing_db.plot(kind='scatter', x="median_income", y='median_house_value')
-plt.show()
-
 # Select a linear model
 model = sklearn.linear_model.LinearRegression()
 
 # Train the model
 model.fit(X, y)
 
-# Make a prediction for Cyprus
-X_new = [[22587]]  # Cyprus' GDP per capita
-print(model.predict(X_new)) # outputs [[ 5.96242338]]
+#prediction
+X_new = [[3.0]]
+print(model.predict(X_new))
+house_value_predict = model.predict(X)
+
+# Visualize the data
+housing_db.plot(kind='scatter', x="median_income", y='median_house_value')
+plt.plot( X , house_value_predict, color="r")
+plt.text(0, 650000, "medium income vs median house value", color='b')
+plt.text(0, 600000, "medium income vs predicted median house value", color='r')
+
+plt.show()
